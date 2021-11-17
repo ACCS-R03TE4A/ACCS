@@ -2,20 +2,23 @@ from pymongo import MongoClient
 from datetime import datetime
 import os
 
-from flask import Flask, request
+from flask import Flask, request, Response
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(
+    app,
+    supports_credentials=True
+) 
 
 #
 client = MongoClient()
 #
 
-
-
 #リモコンアプリからの温度感覚
 @app.route("/temperatureSense", methods=["GET"])
 def get_tSense():
-    try:
+    #try:
         tSense = request.args.get("tSense")
         if tSense == None:
             return {"status":"204 No Content"}
@@ -27,12 +30,10 @@ def get_tSense():
         #
 
         return {"status":"200 OK"}
-    except Exception as e:
-        print(e)#エラー
-        return {"status":"400 Bad Request"}
+    #except Exception as e:
+    #    print(e)#エラー
+    #    return {"status":"400 Bad Request"}
     
-
-
 
 #センサモジュールからのセンサ番号、温度（室温、近辺温度）
 @app.route("/temperatureActual", methods=["GET"])
@@ -63,11 +64,10 @@ def get_tActual():
     
 
 
-
 #リモコンアプリからの郵便番号
 @app.route("/postNumber", methods=["GET"])
 def get_pNumber():
-    try:
+    #try:　　エラーが起こせないから消した
         pNumber = request.args.get("pNumber")
         if pNumber == None:
             return {"status":"204 No Content"}
@@ -80,10 +80,10 @@ def get_pNumber():
         
         
         return {"status":"200 OK"}
-    except Exception as e:
-        print(e)#エラー
-        return {"status":"400 Bad Request"}
-    
+    #except Exception as e:
+    #    print(e)#エラー
+    #    
+    #    return {"status":"400 Bad Request"}
 
 
 
@@ -110,9 +110,9 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    # # a simple page that says hello
+    # @app.route('/hello')
+    # def hello():
+    #     return 'Hello, World!'
 
     return app
