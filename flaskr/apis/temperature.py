@@ -1,7 +1,8 @@
 from flask import request
 from flaskr.app import app
-from flaskr.databases.db import db
+# from flaskr.databases.db import db
 from datetime import datetime
+from flaskr.databases.collection_models.Temperature import Temperature
 
 #センサモジュールからのセンサ番号、温度（室温、近辺温度）
 #センサモジュールから定期的
@@ -17,12 +18,17 @@ def get_tActual():
         
         #print(sNumber)#センサ番号
         #print(tActual)#温度データベースに登録
-        db.temperature.insert_one({
-            "time" : datetime.now(),
-            "temperatureCategory" : int(sNumber),
-            "Temperature" : float(tActual)
-        })
+        # db.temperature.insert_one({
+        #     "time" : datetime.now(),
+        #     "temperatureCategory" : int(sNumber),
+        #     "Temperature" : float(tActual)
+        # })
 
+        Temperature(
+            time=datetime.now(),
+            temperatureCategory=int(sNumber),
+            Temperature=float(tActual)
+            ).save()
         
         return {"status":"200 OK"}
     except Exception as e:

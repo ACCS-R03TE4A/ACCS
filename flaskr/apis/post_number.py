@@ -1,6 +1,7 @@
 from flask import request
 from flaskr.app import app
-from flaskr.databases.db import db
+# from flaskr.databases.db import db
+from flaskr.databases.collection_models.Setting import Setting
 
 #リモコンアプリからの郵便番号
 @app.route("/postNumber", methods=["GET"])
@@ -26,12 +27,13 @@ def get_pNumber():
 
 
         #id = client["ACCS"].setting.find()[0]["_id"]
-        id = "py9BZNHF6"
+        # id = "py9BZNHF6"
 
-        db.setting.update_one({"_id": id}, 
-        {"$set":{"postnumber":pNumber}},
-        upsert = True)
-        
+        # db.setting.update_one({"_id": id}, 
+        # {"$set":{"postnumber":pNumber}},
+        # upsert = True)
+
+        Setting.objects.first().update(postnumber=pNumber)
         
         return {"status":"200 OK"}
 

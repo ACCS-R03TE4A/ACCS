@@ -1,5 +1,9 @@
-from pymongo import MongoClient
-from flaskr.config import DATABASE_NAME
+# from pymongo import MongoClient
+# from flaskr.config import DATABASE_NAME
 
-client = MongoClient()
-db = client[DATABASE_NAME]
+# client = MongoClient()
+# db = client[DATABASE_NAME]
+
+from mongoengine import connect, Document, StringField
+
+connect(db="ACCS")
