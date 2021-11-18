@@ -5,5 +5,6 @@
 # db = client[DATABASE_NAME]
 
 from mongoengine import connect, Document, StringField
+from flaskr.config import DATABASE_CONNECTINO_STRING
 
-connect(db="ACCS")
+connect(host=DATABASE_CONNECTINO_STRING)
