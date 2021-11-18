@@ -9,5 +9,4 @@ def get_temperature(postNumber):
  
     url = api.format(city = postNumber, key = API_KEY)
     data = requests.get(url).json()
-    print(data)
     return data['main']['temp']
