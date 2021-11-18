@@ -22,9 +22,9 @@ client = MongoClient()
 
 
 #郵便番号をデータベースからとってくる
-#pn = 
-
-# threading.Thread(target=sampleOutsideTemp.task, args=(pn)).start()
+id = "py9BZNHF6"
+pn = client["ACCS"].setting.find_one({"_id": id})["postnumber"]
+threading.Thread(target=sampleOutsideTemp.task, args=(pn,)).start()
 
 
 #リモコンアプリからの温度感覚
