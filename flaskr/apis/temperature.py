@@ -2,7 +2,7 @@ from flask import request
 from flaskr.app import app
 # from flaskr.databases.db import db
 from datetime import datetime
-from flaskr.databases.collection_models.Temperature import Temperature
+from flaskr.databases.collection_models.temperature import Temperature
 
 #センサモジュールからのセンサ番号、温度（室温、近辺温度）
 #センサモジュールから定期的

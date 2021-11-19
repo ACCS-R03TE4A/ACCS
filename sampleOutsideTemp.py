@@ -1,6 +1,6 @@
 import threading
 import requests
-from flaskr.util.SearchTemperature import get_temperature
+from flaskr.util.search_temperature import get_temperature
 import sys
 from flaskr import app
 

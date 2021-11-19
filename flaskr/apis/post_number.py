@@ -1,7 +1,7 @@
 from flask import request
 from flaskr.app import app
 # from flaskr.databases.db import db
-from flaskr.databases.collection_models.Setting import Setting
+from flaskr.databases.collection_models.setting import Setting
 
 #リモコンアプリからの郵便番号
 @app.route("/postNumber", methods=["GET"])

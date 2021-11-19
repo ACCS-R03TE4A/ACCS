@@ -16,7 +16,7 @@ import flaskr.apis.temperature_sense
 
 # from flaskr.databases.db import db
 import flaskr.databases.db
-from flaskr.databases.collection_models.Setting import Setting
+from flaskr.databases.collection_models.setting import Setting
 
 from flask.helpers import send_from_directory
 
