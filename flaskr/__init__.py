@@ -20,6 +20,7 @@ from flaskr.databases.collection_models.Setting import Setting
 
 from flask.helpers import send_from_directory
 
+
 CORS(
     app,
     supports_credentials=True
@@ -32,8 +33,7 @@ CORS(
 if Setting.objects.all().count() == 0:
     print(Setting(postnumber="980-0013").save())
 pn = Setting.objects.first().postnumber
-threading.Thread(target=sampleOutsideTemp.task, args=(pn,)).start()
-
+# threading.Thread(target=sampleOutsideTemp.task, args=(pn,)).start()
 
 ###############################################################
 
