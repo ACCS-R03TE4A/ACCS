@@ -1,6 +1,10 @@
 from flask import request
 from flaskr.app import app
 
+
+from Comfortable_temperature_AI.src.TemperatureDetermination import TemperatureDetermination
+
+
 #リモコンアプリからの温度感覚
 @app.route("/temperatureSense", methods=["GET"])
 def get_tSense():
@@ -14,9 +18,13 @@ def get_tSense():
         return {"status":"412 Precondition Failed"}
     
 
-    
+
     #体感温度を1~5を引数に"TemperatureDetermination.py"を呼び出す
-    print(tSense)
+
+    #データベースから直近の温度をとる...findOneとかで？
+    #tActual = 
+
+    td = TemperatureDetermination(,int(tSense))
     
     #
 
