@@ -15,23 +15,7 @@ def get_pNumber():
         print(pNumber)#郵便番号をデータベースに保存する。
 
 
-        # client["ACCS"].setting.insert_one({
-        #     "postnumber" : pNumber
-        # })
 
-
-
-
-        # id = client["ACCS"].setting.find()[0]
-        # print(id)
-
-
-        #id = client["ACCS"].setting.find()[0]["_id"]
-        # id = "py9BZNHF6"
-
-        # db.setting.update_one({"_id": id}, 
-        # {"$set":{"postnumber":pNumber}},
-        # upsert = True)
 
         Setting.objects.first().update(postnumber=pNumber)
         

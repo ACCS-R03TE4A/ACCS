@@ -7,3 +7,4 @@ def test_get_temperature():
 def test_get_temperature_NGcase():
     temperature = get_temperature("980-0021")
     assert isinstance(temperature, int) == False
+
