@@ -14,7 +14,7 @@ def get_tSense():
         return {"status":"412 Precondition Failed"}
     
 
-
+    
     #体感温度を1~5を引数に"TemperatureDetermination.py"を呼び出す
     print(tSense)
     
