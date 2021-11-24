@@ -17,11 +17,20 @@ def test_config():
 
 
 
-def test_200_temperatureSense():
+def test_200_temperatureSense1():
     app = create_app({'TESTING': True})
 
     client = app.test_client() 
-    response = client.get('/temperatureSense?tSense=10')
+    response = client.get('/temperatureSense?tSense=1')
+    data = json.loads(response.data)
+    assert data["status"] == "200 OK"
+
+
+def test_200_temperatureSense2():
+    app = create_app({'TESTING': True})
+
+    client = app.test_client() 
+    response = client.get('/temperatureSense?tSense=5')
     data = json.loads(response.data)
     assert data["status"] == "200 OK"
 
@@ -33,6 +42,24 @@ def test_204_temperatureSense():
     response = client.get('/temperatureSense')
     data = json.loads(response.data)
     assert data["status"] == "204 No Content"
+
+
+def test_412_temperatureSense1():
+    app = create_app({'TESTING': True})
+
+    client = app.test_client() 
+    response = client.get('/temperatureSense?tSense=0')
+    data = json.loads(response.data)
+    assert data["status"] == "412 Precondition Failed"
+
+
+def test_412_temperatureSense2():
+    app = create_app({'TESTING': True})
+
+    client = app.test_client() 
+    response = client.get('/temperatureSense?tSense=6')
+    data = json.loads(response.data)
+    assert data["status"] == "412 Precondition Failed"
 
 
 #################################################################
@@ -84,6 +111,7 @@ def test_204_postNumber():
     response = client.get('/postNumber')
     data = json.loads(response.data)
     assert data["status"] == "204 No Content"
+
 
 
 
