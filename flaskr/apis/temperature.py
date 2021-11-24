@@ -4,6 +4,10 @@ from flaskr.app import app
 from datetime import datetime
 from flaskr.databases.collection_models.temperature import Temperature
 
+import sys
+sys.path.append("Home-appliance-control-AI")
+import applianceControl
+
 #センサモジュールからのセンサ番号、温度（室温、近辺温度）
 #センサモジュールから定期的
 @app.route("/temperatureActual", methods=["GET"])
@@ -16,6 +20,16 @@ def get_tActual():
         if sNumber == None or tActual == None:
             return {"status":"204 No Content"}
         
+        ##
+        tTarget = 25    #目標温度はAIのなんかからとる
+        if sNumber == "0": #近辺温度のモジュール番号
+             #applianceControlを呼び出す
+             applianceControl.control(sNumber, int(tActual), tTarget)
+        
+
+        
+
+
         #print(sNumber)#センサ番号
         #print(tActual)#温度データベースに登録
         # db.temperature.insert_one({
