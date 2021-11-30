@@ -22,30 +22,15 @@ def get_tSense():
         return {"status":"412 Precondition Failed"}
     
 
-
-
     #近辺温度(temperatureCategory=sNumber)が0のものが欲しい
 
-    #1:帰ってくるのは"Temperature"　型っぽい。json対応してない
-    #tActual = Temperature.objects(temperatureCategory="10").first()
-
-    #2:取ってこれるけど、値が2つあるし、分けれない。
-    #tActual = Temperature.objects.get(temperatureCategory="10")
-
-    #3:全部出して最初だけ取り出しそう。"visitors"ないけど。
-    #tActual = Temperature.objects.all()
-    #tActual = visitors[0].ip
-
-    #4:Temperature objectが返ってくる
-    #tActual = Temperature.objects.first(Temperature)
-
-
-    print(tActual)    
-
+    #ACCS > temperature(Temperature) > Temperature(温度)の最新を取り出す
+    tObject = Temperature.objects(temperatureCategory="0").first()
+    tActual = tObject.Temperature    
     
-    #td = TemperatureDetermination(tActual,int(tSense))
+    td = TemperatureDetermination(int(tActual),int(tSense))
 
-    return {"status":"200 OK","tSense":tSense}
+    return {"status":"200 OK","tActual":tActual,"tSense":tSense}
     #except Exception as e:
     #    print(e)#エラー
     #    return {"status":"400 Bad Request"}
