@@ -23,18 +23,17 @@ def get_tSense():
     
 
 
-    #ACCS > temperature(Temperature) > Temperature(温度)からセンサ番号が0の最新を取り出す。
-
+    #ACCS > temperature(Temperature) > Temperature(温度)からセンサ番号が0(近辺温度)の最新を取り出す。
     tObject = Temperature.objects(temperatureCategory="0").first()
     tActual = tObject.Temperature    
     
-    ####################################################################
+    #Determinationから目標温度が返ってくる
+    tTarget = TemperatureDetermination(int(tActual),int(tSense)).decision_base()
+    print(tTarget)
 
-    #目標温度が返ってくる...よね？
-    tTarget = TemperatureDetermination(int(tActual),int(tSense))
-
-    ################
-    ittann = control(tActual,tTarget)
+    #操作指示
+    controlResult = control(tActual,tTarget)
+    print(controlResult)
 
 
     return {"status":"200 OK","tActual":tActual,"tSense":tSense}
