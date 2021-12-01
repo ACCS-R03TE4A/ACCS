@@ -18,7 +18,7 @@ def get_tSense():
     if tSense == None:
         return {"status":"204 No Content"}
     
-    if int(tSense) < 1 or int(tSense) > 5:
+    if int(tSense) < 0 or int(tSense) > 4:
         return {"status":"412 Precondition Failed"}
     
 
