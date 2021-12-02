@@ -10,5 +10,4 @@ def get_temperature(postNumber):
     #郵便番号はハイフン無いとダメ
     url = api.format(city = postNumber, key = API_KEY)
     data = requests.get(url).json()
-    print(data)
     return data['main']['temp']
