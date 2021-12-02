@@ -1,0 +1,6 @@
+[submodule "Comfortable_temperature_AI"]
+	path = Comfortable_temperature_AI
+	url = https://github.com/ACCS-R03TE4A/Comfortable-temperature-AI.git
+[submodule "Home_appliance_control_AI"]
+	path = Home_appliance_control_AI
+	url = https://github.com/ACCS-R03TE4A/Home-appliance-control-AI.git

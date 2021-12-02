@@ -2,100 +2,44 @@ from pymongo import MongoClient
 from datetime import datetime
 import os
 
-from flask import Flask, request, Response
-from flask_cors import CORS
 
-app = Flask(__name__)
+from flask_cors import CORS
+from flaskr.app import app
+
+import threading
+import sampleOutsideTemp
+
+import flaskr.views.remocon
+import flaskr.apis.post_number
+import flaskr.apis.temperature
+import flaskr.apis.temperature_sense
+
+# from flaskr.databases.db import db
+import flaskr.databases.db
+from flaskr.databases.collection_models.setting import Setting
+
+from flask.helpers import send_from_directory
+
+
 CORS(
     app,
     supports_credentials=True
 ) 
 
-#
-client = MongoClient()
-#
 
-#リモコンアプリからの温度感覚
-@app.route("/temperatureSense", methods=["GET"])
-def get_tSense():
-    #try:
-        tSense = request.args.get("tSense")
-        if tSense == None:
-            return {"status":"204 No Content"}
-        
-        #
-        print(tSense)#コントロールサーバ
-
-
-        #
-
-        return {"status":"200 OK"}
-    #except Exception as e:
-    #    print(e)#エラー
-    #    return {"status":"400 Bad Request"}
-    
-
-#センサモジュールからのセンサ番号、温度（室温、近辺温度）
-@app.route("/temperatureActual", methods=["GET"])
-def get_tActual():
-    try:
-
-        sNumber = request.args.get("sNumber")
-        tActual = request.args.get("tActual")
-        #all = request.args.getlist("")
-        #?????????????????????????
-
-        if sNumber == None or tActual == None:
-            return {"status":"204 No Content"}
-        
-        #print(sNumber)#センサ番号
-        #print(tActual)#温度データベースに登録
-        client["ACCS"].temperature.insert_one({
-            "time" : datetime.now(),
-            "temperatureCategory" : int(sNumber),
-            "Temperature" : float(tActual)
-        })
-
-        
-        return {"status":"200 OK"}
-    except Exception as e:
-        print(e)#エラー
-        return {"status":"400 Bad Request"}
-    
-
-
-#リモコンアプリからの郵便番号
-@app.route("/postNumber", methods=["GET"])
-def get_pNumber():
-    #try:　　エラーが起こせないから消した
-        pNumber = request.args.get("pNumber")
-        if pNumber == None:
-            return {"status":"204 No Content"}
-        
-        
-        #print(pNumber)#郵便番号をデータベースに保存する。
-        client["ACCS"].setting.insert_one({
-            "postnumber" : pNumber
-        })
-        
-        
-        return {"status":"200 OK"}
-    #except Exception as e:
-    #    print(e)#エラー
-    #    
-    #    return {"status":"400 Bad Request"}
-
-
+#郵便番号をデータベースからとってくる
+# id = "py9BZNHF6"
+# pn = db.setting.find_one({"_id": id})["postnumber"]
+if Setting.objects.all().count() == 0:
+    print(Setting(postnumber="980-0013").save())
+pn = Setting.objects.first().postnumber
+# threading.Thread(target=sampleOutsideTemp.task, args=(pn,)).start()
 
 ###############################################################
 
 def create_app(test_config=None):
     # create and configure the app
 #    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-    )
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
