@@ -11,15 +11,10 @@ def get_pNumber():
         if pNumber == None:
             return {"status":"204 No Content"}
         
-        
-        print(pNumber)#郵便番号をデータベースに保存する。
-
-
-
-
+        #郵便番号をデータベースに保存する。
         Setting.objects.first().update(postnumber=pNumber)
         
-        return {"status":"200 OK"}
+        return {"status":"200 OK","pNumber":pNumber}
 
     #except Exception as e:
     #    print(e)#エラー
