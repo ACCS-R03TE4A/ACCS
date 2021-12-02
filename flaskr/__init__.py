@@ -13,6 +13,7 @@ import flaskr.views.remocon
 import flaskr.apis.post_number
 import flaskr.apis.temperature
 import flaskr.apis.temperature_sense
+import flaskr.apis.operation
 
 # from flaskr.databases.db import db
 import flaskr.databases.db
