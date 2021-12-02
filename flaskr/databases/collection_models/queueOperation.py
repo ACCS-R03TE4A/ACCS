@@ -1,5 +1,11 @@
-from mongoengine import connect, Document, StringField
+from mongoengine import connect, Document, StringField, IntField, BinaryField
 
 class queueOperation(Document):
-    operation = StringField(Required=True)
+    appliance = StringField(Required=True)
+    protocol = IntField(Required=True)
+    data = BinaryField(Required=True)
+    size = IntField(Required=True)
+    frequency = IntField(Required=False)
+
+
     meta = {'collection':'queueOperation'}
