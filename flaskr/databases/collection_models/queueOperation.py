@@ -18,7 +18,7 @@ class queueOperation(Document):
     def get_dict(self):
 
         ope_dict = {"appliance":self.appliance, 
-        "protocol":self.protocol, "data":int(self.data), 
+        "protocol":self.protocol, "data":int.from_bytes(self.data, "big"), 
         "size":self.size}
 
         return ope_dict
