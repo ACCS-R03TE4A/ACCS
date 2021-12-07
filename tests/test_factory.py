@@ -21,7 +21,7 @@ def test_200_temperatureSense1():
     app = create_app({'TESTING': True})
 
     client = app.test_client() 
-    response = client.get('/temperatureSense?tSense=1')
+    response = client.get('/temperatureSense?tSense=0')
     data = json.loads(response.data)
     assert data["status"] == "200 OK"
 
@@ -30,7 +30,7 @@ def test_200_temperatureSense2():
     app = create_app({'TESTING': True})
 
     client = app.test_client() 
-    response = client.get('/temperatureSense?tSense=5')
+    response = client.get('/temperatureSense?tSense=4')
     data = json.loads(response.data)
     assert data["status"] == "200 OK"
 
@@ -48,7 +48,7 @@ def test_412_temperatureSense1():
     app = create_app({'TESTING': True})
 
     client = app.test_client() 
-    response = client.get('/temperatureSense?tSense=0')
+    response = client.get('/temperatureSense?tSense=-1')
     data = json.loads(response.data)
     assert data["status"] == "412 Precondition Failed"
 
@@ -57,7 +57,7 @@ def test_412_temperatureSense2():
     app = create_app({'TESTING': True})
 
     client = app.test_client() 
-    response = client.get('/temperatureSense?tSense=6')
+    response = client.get('/temperatureSense?tSense=5')
     data = json.loads(response.data)
     assert data["status"] == "412 Precondition Failed"
 
