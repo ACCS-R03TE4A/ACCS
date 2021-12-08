@@ -1,7 +1,15 @@
 from flaskr import create_app
 import pytest
 import json
+import pytest
 
+@pytest.fixture(scope = 'module', autouse=True)
+def scope_module():
+    print()
+    print(f"-----------------{__name__}のテスト-----------------")
+    yield
+    print(f"--------------------------------------------------------")
+    print()
 
 def test_config():
     assert not create_app().testing

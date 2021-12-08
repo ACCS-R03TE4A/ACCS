@@ -13,11 +13,18 @@ from flaskr.databases.collection_models.temperature import Temperature
 #     assert not create_app().testingassert
 #     create_app({'TESTING': True}).testing
 
+@pytest.fixture(scope = 'module', autouse=True)
+def scope_module():
+    print()
+    print(f"-----------------{__name__}のテスト-----------------")
+    yield
+    print(f"--------------------------------------------------------")
+    print()
 
 @pytest.fixture(scope = 'function', autouse=True)
 def scope_function():#いったんmocker抜いた
     #テスト前処理
-
+    print("setup before session")   
     #テストのためだけの温度保存
     Temperature(
     time = "0001-01-01T01:01:01.000Z",
@@ -31,7 +38,7 @@ def scope_function():#いったんmocker抜いた
     #queueOperationを空にする
     queueOperation.objects.all().delete()
 
-    print("setup before session")
+    
     yield
     #テスト後処理
     Temperature.objects(time = "0001-01-01T01:01:01.000Z").delete()
