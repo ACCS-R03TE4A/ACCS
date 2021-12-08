@@ -82,6 +82,15 @@ def test_204_temperatureActual():
     assert data["status"] == "204 No Content"
 
 
+def test_412_temperatureActual():
+    app = create_app({'TESTING': True})
+
+    client = app.test_client() 
+    response = client.get('/temperatureActual?sNumber=5&tActual=16')
+    data = json.loads(response.data)
+    assert data["status"] == "412 Precondition Failed"
+
+
 def test_400_temperatureActual():
     app = create_app({'TESTING': True})
 

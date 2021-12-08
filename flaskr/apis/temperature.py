@@ -16,6 +16,9 @@ def get_tActual():
         if sNumber == None or tActual == None:
             return {"status":"204 No Content"}
         
+        if int(sNumber) < 0 or int(sNumber) > 4:
+            return {"status":"412 Precondition Failed"}
+        
         #print(sNumber)#センサ番号
         #print(tActual)#温度データベースに登録
         # db.temperature.insert_one({
