@@ -15,8 +15,6 @@ import flaskr.apis.temperature
 import flaskr.apis.temperature_sense
 import flaskr.apis.operation
 
-import tests.test_integration
-
 # from flaskr.databases.db import db
 import flaskr.databases.db
 from flaskr.databases.collection_models.setting import Setting
