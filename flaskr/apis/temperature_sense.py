@@ -7,7 +7,7 @@ import json
 from Comfortable_temperature_AI.src.TemperatureDetermination import TemperatureDetermination
 from Home_appliance_control_AI.applianceControl import control
 from flaskr.databases.collection_models.temperature import Temperature
-
+from flaskr.util.temperatureCategory import TemperatureCategory
 
 #リモコンアプリからの温度感覚
 @app.route("/temperatureSense", methods=["GET"])
@@ -24,7 +24,7 @@ def get_tSense():
 
 
     #ACCS > temperature(Temperature) > Temperature(温度)からセンサ番号が0(近辺温度)の最新を取り出す。
-    tObject = Temperature.objects(temperatureCategory="0").first()
+    tObject = Temperature.objects(temperatureCategory= TemperatureCategory.tActual).first()
     tActual = tObject.Temperature    
     
     #Determinationから目標温度が返ってくる
