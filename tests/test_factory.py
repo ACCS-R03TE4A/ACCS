@@ -68,7 +68,7 @@ def test_200_temperatureActual():
     app = create_app({'TESTING': True})
 
     client = app.test_client() 
-    response = client.get('/temperatureActual?sNumber=10&tActual=555')
+    response = client.get('/temperatureActual?sNumber=0&tActual=24')
     data = json.loads(response.data)
     assert data["status"] == "200 OK"
 
