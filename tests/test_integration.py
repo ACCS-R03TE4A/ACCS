@@ -31,10 +31,7 @@ def scope_function():#いったんmocker抜いた
     temperatureCategory = 0,
     Temperature = 30 #この温度の場合
     ).save()
-
-    # mocker.patch("flaskr.databases.collection_models.temperature.Temperature.objects.first", 
-    # return_value=Temperature(time=datetime.now(),temperatureCategory = 0,Temperature=30))
-
+    
     #queueOperationを空にする
     queueOperation.objects.all().delete()
 
@@ -46,18 +43,16 @@ def scope_function():#いったんmocker抜いた
     print("teardown after session")
 
 
-
 def test_tSense_0():
     app = create_app({'TESTING': True})
     client = app.test_client() 
 
     client.get('/temperatureSense?tSense=0')
-    operation = queueOperation.objects(appliance="学校のサーキュレータ").order_by("+_id").first()
-    x = int.from_bytes(operation.data, "big")
-    ope = hex(x)
-    
-    operation.delete()
-    assert ope == "0x17b00ff"
+    response = client.get('/operation')
+    actual = json.loads(response.data)
+
+    assert actual['status'] == 1
+    assert actual['operation']['data'] == '0x17b00ff'
 
 
 def test_tSense_1():
@@ -65,46 +60,31 @@ def test_tSense_1():
     client = app.test_client()
 
     client.get('/temperatureSense?tSense=1')
-    operation = queueOperation.objects(appliance="学校のサーキュレータ").order_by("+_id").first()
-    x = int.from_bytes(operation.data, "big")
-    ope = hex(x)
-    
-    operation.delete()
+    response = client.get('/operation')
+    actual = json.loads(response.data)
 
-    assert ope == "0x17b00ff"
+    assert actual['status'] == 1
+    assert actual['operation']['data'] == '0x17b00ff'
 
-#これヤバ()
-# def test_tSense_2():#ちょうどいい
-#     app = create_app({'TESTING': True})
-#     client = app.test_client() 
-
-#     client.get('/temperatureSense?tSense=2')
-
-#     operation = queueOperation.objects(appliance="学校のサーキュレータ").order_by("+_id").first()
-#     x = int.from_bytes(operation.data, "big")
-#     ope = hex(x)
-#     operation.delete()
-
-#     assert ope == "0x17b10ef"
-
+#test_tSense_2は適温 -> 操作なし
 
 def test_tSense_3():
     app = create_app({'TESTING': True})
     client = app.test_client() 
 
     client.get('/temperatureSense?tSense=3')
-    operation = queueOperation.objects(appliance="学校のサーキュレータ").order_by("+_id").first()
-    x = int.from_bytes(operation.data, "big")
-    ope = hex(x)
-    operation.delete()
+    response = client.get('/operation')
+    actual = json.loads(response.data)
 
-    operation2 = queueOperation.objects(appliance="学校のサーキュレータ").order_by("+_id").first()
-    x = int.from_bytes(operation2.data, "big")
-    ope2 = hex(x)
-    operation2.delete()
+    assert actual['status'] == 2
+    assert actual['operation']['data'] == '0x17b00ff'
 
-    assert ope == "0x17b00ff"
-    assert ope2 == "0x17b10ef"
+
+    response = client.get('/operation')
+    actual = json.loads(response.data)
+
+    assert actual['status'] == 1
+    assert actual['operation']['data'] == '0x17b10ef'
 
 
 def test_tSense_4():
@@ -112,15 +92,16 @@ def test_tSense_4():
     client = app.test_client() 
     
     client.get('/temperatureSense?tSense=4')
-    operation = queueOperation.objects(appliance="学校のサーキュレータ").order_by("+_id").first()
-    x = int.from_bytes(operation.data, "big")
-    ope = hex(x)
-    operation.delete()
+    response = client.get('/operation')
+    actual = json.loads(response.data)
 
-    operation2 = queueOperation.objects(appliance="学校のサーキュレータ").order_by("+_id").first()
-    x = int.from_bytes(operation2.data, "big")
-    ope2 = hex(x)
-    operation2.delete()
+    assert actual['status'] == 2
+    assert actual['operation']['data'] == '0x17b00ff'
 
-    assert ope == "0x17b00ff"
-    assert ope2 == "0x17b10ef"
+
+    response = client.get('/operation')
+    actual = json.loads(response.data)
+
+    assert actual['status'] == 1
+    assert actual['operation']['data'] == '0x17b10ef'
+
