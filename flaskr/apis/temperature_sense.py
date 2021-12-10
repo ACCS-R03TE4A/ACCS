@@ -1,8 +1,8 @@
 from flask import request
 from flaskr.app import app
 
-
 import json
+import requests
 
 from Comfortable_temperature_AI.src.TemperatureDetermination import TemperatureDetermination
 from Home_appliance_control_AI.applianceControl import control
@@ -25,7 +25,7 @@ def get_tSense():
 
     #ACCS > temperature(Temperature) > Temperature(温度)からセンサ番号が0(近辺温度)の最新を取り出す。
     tObject = Temperature.objects(temperatureCategory= TemperatureCategory.tActual).first()
-    tActual = tObject.Temperature    
+    tActual = tObject.Temperature
     
     #Determinationから目標温度が返ってくる
     tTarget = TemperatureDetermination(int(tActual),int(tSense)).decision_base()
@@ -33,7 +33,14 @@ def get_tSense():
 
     #操作指示
     controlResult = control(tActual,tTarget)
+    
+    if controlResult == " <- ちょうどいい":
+        #ちょうどいい温度として保存する
+        saveResult = requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber=4&tActual={tActual}")
+        print("適温を保存")
+    
     print(controlResult)
+    
 
 
     return {"status":"200 OK","tActual":tActual,"tSense":tSense}
