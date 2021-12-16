@@ -1,10 +1,9 @@
 from flask import request
 from flaskr.app import app
-# from flaskr.databases.db import db
 from flaskr.databases.collection_models.queueOperation import queueOperation
 import traceback
 import json
-import binascii
+
 
 def digitConversion(x):
     y = int.from_bytes(x, "big")

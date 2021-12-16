@@ -1,6 +1,5 @@
 from flask import request
 from flaskr.app import app
-# from flaskr.databases.db import db
 from datetime import datetime
 from flaskr.databases.collection_models.temperature import Temperature
 
