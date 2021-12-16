@@ -6,4 +6,5 @@ git submodule init
 git submodule update
 export FLASK_APP=flaskr
 export FLASK_ENV=development
+export mongodb_password=password
 flask run
