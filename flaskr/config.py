@@ -9,5 +9,5 @@ elif BUILD == "debug":
 elif BUILD == "release":
     DATABASE_NAME = "ACCS_RELEASE"
 #----------COMMON----------
-DATABASE_CONNECTINO_STRING = f"mongodb://{os.environ['mongodb_password']}@localhost:27017/{DATABASE_NAME}"
+DATABASE_CONNECTINO_STRING = f"mongodb://localhost:27017/{DATABASE_NAME}"
 #------------------------------
