@@ -17,4 +17,6 @@
 
 ## サーバ起動
 1. source env/bin/activate
-2. flask run -h 0.0.0.0
+2. export FLASK_APP=flaskr
+3. export FLASK_ENV=development
+4. flask run -h 0.0.0.0
