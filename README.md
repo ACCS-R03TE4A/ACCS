@@ -4,8 +4,8 @@
   - echo 'export HTTP_PROXY=http://172.17.0.2:80' >> ~/.bashrc # ユーザーごとに
   - echo 'export HTTPS_PROXY=http://172.17.0.2:80' >> ~/.bashrc # ユーザーごとに
   - source ~/.bashrc # ユーザーごとに
-  - echo 'Acquire::http::Proxy "http://172.17.0.2";' >> /etc/apt/apt.conf # 要root
-  - echo 'Acquire::https::Proxy "http://172.17.0.2";' >> /etc/apt/apt.conf # 要root
+  - echo 'Acquire::http::Proxy "http://172.17.0.2:80";' >> /etc/apt/apt.conf # 要root
+  - echo 'Acquire::https::Proxy "http://172.17.0.2:80";' >> /etc/apt/apt.conf # 要root
   - echo 'http_proxy=http://172.17.0.2:80/' >> /etc/wgetrc # 要root
   - echo 'https_proxy=http://172.17.0.2:80/' >> /etc/wgetrc # 要root
   - echo 'ftp_proxy=http://172.17.0.2:80/' >> /etc/wgetrc # 要root
