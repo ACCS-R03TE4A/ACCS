@@ -13,4 +13,8 @@
 2. cd ACCS-SERVER
 3. chmod +x ./scripts/*
 4. ./scripts/deploywithroot.sh # 要root
-5. 
+5. ./scripts/deploy.sh
+
+## サーバ起動
+1. source env/bin/activate
+2. flask run -h 0.0.0.0
