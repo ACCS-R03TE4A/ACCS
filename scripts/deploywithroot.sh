@@ -1,4 +1,5 @@
 #!/bin/bash
+apt-get update
 apt install -y python3-venv
 apt install -y build-essential
 apt install -y python3-dev
