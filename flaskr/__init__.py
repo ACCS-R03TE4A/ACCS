@@ -1,3 +1,4 @@
+from flask import config
 from pymongo import MongoClient
 from datetime import datetime
 import os
@@ -9,13 +10,17 @@ from flaskr.app import app
 import threading
 import sampleOutsideTemp
 
+# view
 import flaskr.views.remocon
+import flaskr.views.redirect_to_remocon
+
+# API
 import flaskr.apis.post_number
 import flaskr.apis.temperature
 import flaskr.apis.temperature_sense
 import flaskr.apis.operation
 
-# from flaskr.databases.db import db
+# Database
 import flaskr.databases.db
 from flaskr.databases.collection_models.setting import Setting
 
@@ -36,7 +41,7 @@ if Setting.objects.all().count() == 0:
 pn = Setting.objects.first().postnumber
 # threading.Thread(target=sampleOutsideTemp.task, args=(pn,)).start()
 
-###############################################################
+import flaskr.build_and_deploy_remocon_app # リモコンアプリのビルドと配置をする。
 
 def create_app(test_config=None):
     # create and configure the app

@@ -1,0 +1,1 @@
+{"options":{"validator":{"$jsonSchema":{"required":["postnumber"],"properties":{"postnumber":{"bsonType":"string"}}}}},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"4c2d03c315954878a4ea214e8d553b7b","collectionName":"setting","type":"collection"}
