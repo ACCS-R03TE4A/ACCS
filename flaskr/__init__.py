@@ -10,13 +10,17 @@ from flaskr.app import app
 import threading
 import sampleOutsideTemp
 
+# view
 import flaskr.views.remocon
+import flaskr.views.redirect_to_remocon
+
+# API
 import flaskr.apis.post_number
 import flaskr.apis.temperature
 import flaskr.apis.temperature_sense
 import flaskr.apis.operation
 
-# from flaskr.databases.db import db
+# Database
 import flaskr.databases.db
 from flaskr.databases.collection_models.setting import Setting
 
