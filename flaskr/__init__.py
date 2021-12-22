@@ -40,8 +40,8 @@ if Setting.objects.all().count() == 0:
     print(Setting(postnumber="980-0013").save())
 pn = Setting.objects.first().postnumber
 # threading.Thread(target=sampleOutsideTemp.task, args=(pn,)).start()
-
-import flaskr.build_and_deploy_remocon_app # リモコンアプリのビルドと配置をする。
+if app.env != "test":
+    import flaskr.build_and_deploy_remocon_app # リモコンアプリのビルドと配置をする。
 
 def create_app(test_config=None):
     # create and configure the app
