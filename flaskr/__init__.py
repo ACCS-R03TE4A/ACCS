@@ -19,6 +19,7 @@ import flaskr.apis.post_number
 import flaskr.apis.temperature
 import flaskr.apis.temperature_sense
 import flaskr.apis.operation
+import flaskr.apis.temperature_current
 
 # Database
 import flaskr.databases.db
