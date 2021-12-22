@@ -20,12 +20,12 @@ def get_tCurrent():
         tCurrent_I = Temperature.objects(temperatureCategory= TemperatureCategory.InsideTemp).order_by("-time").first()
         tCurrent_O = Temperature.objects(temperatureCategory= TemperatureCategory.OutsideTemp).order_by("-time").first()
         tCurrent_S = Temperature.objects(temperatureCategory= TemperatureCategory.tSuitable).order_by("-time").first()
-        
+        tCurrent_T = Temperature.objects(temperatureCategory= TemperatureCategory.tTarget).order_by("-time").first()
 
-        print(tCurrent_A.Temperature, tCurrent_I.Temperature, tCurrent_O.Temperature, tCurrent_S.Temperature)
+        print(tCurrent_A.Temperature, tCurrent_I.Temperature, tCurrent_O.Temperature, tCurrent_S.Temperature, tCurrent_T.Temperature)
         
         return {"status":"200 OK","tCurrent":{"InsideTemp":tCurrent_I.Temperature, "OutsideTemp":tCurrent_O.Temperature, 
-        "tActual":tCurrent_A.Temperature, "tSuitable":tCurrent_S.Temperature}}
+        "tActual":tCurrent_A.Temperature, "tSuitable":tCurrent_S.Temperature, "tTarget":tCurrent_T.Temperature}}
     except Exception as e:
         traceback.print_exc()
         return {"status":"400 Bad Request"}

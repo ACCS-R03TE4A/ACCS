@@ -3,3 +3,4 @@ class TemperatureCategory():
     InsideTemp = 1
     OutsideTemp = 2
     tSuitable = 3
+    tTarget = 4

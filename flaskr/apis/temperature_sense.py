@@ -31,17 +31,21 @@ def get_tSense():
     tTarget = TemperatureDetermination(int(tActual),int(tSense)).decision_base()
     print(tTarget)
 
+    #目標温度の保存
+    requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber=4&tActual={tTarget}")
+
+
+
     #操作指示
     controlResult = control(tActual,tTarget)
     
     if controlResult == " <- ちょうどいい":
         #ちょうどいい温度として保存する
-        saveResult = requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber=4&tActual={tActual}")
+        saveResult = requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber=3&tActual={tActual}")
         print("適温を保存")
     
     print(controlResult)
     
-
 
     return {"status":"200 OK","tActual":tActual,"tSense":tSense}
     #except Exception as e:
