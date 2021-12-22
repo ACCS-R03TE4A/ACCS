@@ -1,10 +1,11 @@
 import os
+from flaskr.app import app
 # BUILD : "release" | "debug" | "test"
-BUILD = "test"
+BUILD = app.env
 
 if BUILD == "test":
     DATABASE_NAME = "ACCS_TEST"
-elif BUILD == "debug":
+elif BUILD in ["debug","development"]:
     DATABASE_NAME = "ACCS_DEBUG"
 elif BUILD == "release":
     DATABASE_NAME = "ACCS_RELEASE"

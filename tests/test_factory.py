@@ -2,11 +2,20 @@ from flaskr import create_app
 import pytest
 import json
 import pytest
+from flaskr.databases.collection_models.temperature import Temperature
+from datetime import datetime
 
 @pytest.fixture(scope = 'module', autouse=True)
 def scope_module():
     print()
     print(f"-----------------{__name__}のテスト-----------------")
+    print("Init \"temperature\" collection ")
+    Temperature.objects.all().delete()
+    print("Insert test data into \"temperature\" collection.")
+    Temperature(
+        time = datetime.now(),
+        temperatureCategory = 0,
+        Temperature = 22).save()
     yield
     print(f"--------------------------------------------------------")
     print()
