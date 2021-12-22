@@ -24,8 +24,8 @@ def get_tCurrent():
 
         print(tCurrent_A.Temperature, tCurrent_I.Temperature, tCurrent_O.Temperature, tCurrent_S.Temperature)
         
-        return {"status":"200 OK","tCurrent":{"tActual":tCurrent_A.Temperature, "InsideTemp":tCurrent_I.Temperature, 
-        "OutsideTemp":tCurrent_O.Temperature, "tSuitable":tCurrent_S.Temperature}}
+        return {"status":"200 OK","tCurrent":{"InsideTemp":tCurrent_I.Temperature, "OutsideTemp":tCurrent_O.Temperature, 
+        "tActual":tCurrent_A.Temperature, "tSuitable":tCurrent_S.Temperature}}
     except Exception as e:
         traceback.print_exc()
         return {"status":"400 Bad Request"}
