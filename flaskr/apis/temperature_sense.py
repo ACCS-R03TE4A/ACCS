@@ -24,7 +24,7 @@ def get_tSense():
 
 
     #ACCS > temperature(Temperature) > Temperature(温度)からセンサ番号が0(近辺温度)の最新を取り出す。
-    tObject = Temperature.objects(temperatureCategory= TemperatureCategory.tActual).first()
+    tObject = Temperature.objects(temperatureCategory= TemperatureCategory.tActual).order_by("-time").first()
     tActual = tObject.Temperature
     
     #Determinationから目標温度が返ってくる
