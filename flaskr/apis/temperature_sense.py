@@ -34,10 +34,10 @@ def get_tSense():
     #操作指示
     controlResult = control(tActual,tTarget)
     
-    if controlResult == " <- ちょうどいい":
-        #ちょうどいい温度として保存する
-        saveResult = requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber=4&tActual={tActual}")
-        print("適温を保存")
+    #if controlResult == " <- ちょうどいい":
+    #ちょうどいい温度として保存する
+    saveResult = requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={tTarget}")
+    print("適温を保存")
     
     print(controlResult)
     

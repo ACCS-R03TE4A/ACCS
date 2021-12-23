@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, Response
 from flaskr.app import app
 
 import json
@@ -19,22 +19,22 @@ def get_tCurrent():
         tCurrent_A = Temperature.objects(temperatureCategory= TemperatureCategory.tActual).order_by("-time").first() 
         tCurrent_I = Temperature.objects(temperatureCategory= TemperatureCategory.InsideTemp).order_by("-time").first()
         tCurrent_O = Temperature.objects(temperatureCategory= TemperatureCategory.OutsideTemp).order_by("-time").first()
-        tCurrent_S = Temperature.objects(temperatureCategory= TemperatureCategory.tSuitable).order_by("-time").first()
+        tCurrent_S = Temperature.objects(temperatureCategory= TemperatureCategory.tTarget).order_by("-time").first()
         
 
         print({"status":"200 OK","tCurrent":{
             "InsideTemp":tCurrent_I.Temperature if tCurrent_I != None else None, 
             "OutsideTemp":tCurrent_O.Temperature if tCurrent_O != None else None, 
             "tActual":tCurrent_A.Temperature if tCurrent_A != None else None, 
-            "tSuitable":tCurrent_S.Temperature if tCurrent_S != None else None
+            "tTarget":tCurrent_S.Temperature if tCurrent_S != None else None
             }})
         
         return {"status":"200 OK","tCurrent":{
             "InsideTemp":tCurrent_I.Temperature if tCurrent_I != None else "未取得", 
             "OutsideTemp":tCurrent_O.Temperature if tCurrent_O != None else "未取得", 
             "tActual":tCurrent_A.Temperature if tCurrent_A != None else "未取得", 
-            "tSuitable":tCurrent_S.Temperature if tCurrent_S != None else "未取得"
+            "tTarget":tCurrent_S.Temperature if tCurrent_S != None else "未取得"
             }}
     except Exception as e:
         traceback.print_exc()
-        return {"status":"400 Bad Request"}
+        return Response(responce=json.dumps({"status":"400 Bad Request"}), status=400)
