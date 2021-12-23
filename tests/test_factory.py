@@ -57,8 +57,7 @@ def test_204_temperatureSense():
 
     client = app.test_client() 
     response = client.get('/temperatureSense')
-    data = json.loads(response.data)
-    assert data["status"] == "204 No Content"
+    assert response.status_code == 204
 
 
 def test_412_temperatureSense1():
@@ -95,8 +94,7 @@ def test_204_temperatureActual():
 
     client = app.test_client() 
     response = client.get('/temperatureActual')
-    data = json.loads(response.data)
-    assert data["status"] == "204 No Content"
+    assert response.status_code == 204
 
 
 def test_412_temperatureActual():
