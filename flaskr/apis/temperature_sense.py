@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, Response
 from flaskr.app import app
 
 import json
@@ -16,10 +16,10 @@ def get_tSense():
     tSense = request.args.get("tSense")
     
     if tSense == None:
-        return {"status":"204 No Content"}
+        return  Response(response=json.dumps({"status":"204 No Content"}), status=204)
     
     if int(tSense) < 0 or int(tSense) > 4:
-        return {"status":"412 Precondition Failed"}
+        return Response(response=json.dumps({"status":"412 Precondition Failed"}), status=412)
     
 
 

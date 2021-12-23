@@ -30,10 +30,10 @@ def get_tCurrent():
             }})
         
         return {"status":"200 OK","tCurrent":{
-            "InsideTemp":tCurrent_I.Temperature if tCurrent_I != None else None, 
-            "OutsideTemp":tCurrent_O.Temperature if tCurrent_O != None else None, 
-            "tActual":tCurrent_A.Temperature if tCurrent_A != None else None, 
-            "tSuitable":tCurrent_S.Temperature if tCurrent_S != None else None
+            "InsideTemp":tCurrent_I.Temperature if tCurrent_I != None else "未取得", 
+            "OutsideTemp":tCurrent_O.Temperature if tCurrent_O != None else "未取得", 
+            "tActual":tCurrent_A.Temperature if tCurrent_A != None else "未取得", 
+            "tSuitable":tCurrent_S.Temperature if tCurrent_S != None else "未取得"
             }}
     except Exception as e:
         traceback.print_exc()
