@@ -7,9 +7,6 @@ import os
 from flask_cors import CORS
 from flaskr.app import app
 
-import threading
-import sampleOutsideTemp
-
 # view
 import flaskr.views.remocon
 import flaskr.views.redirect_to_remocon
@@ -33,14 +30,6 @@ CORS(
     supports_credentials=True
 ) 
 
-
-#郵便番号をデータベースからとってくる
-# id = "py9BZNHF6"
-# pn = db.setting.find_one({"_id": id})["postnumber"]
-if Setting.objects.all().count() == 0:
-    print(Setting(postnumber="980-0013").save())
-pn = Setting.objects.first().postnumber
-# threading.Thread(target=sampleOutsideTemp.task, args=(pn,)).start()
 if app.env != "test":
     import flaskr.build_and_deploy_remocon_app # リモコンアプリのビルドと配置をする。
 

@@ -9,7 +9,7 @@ from Home_appliance_control_AI.applianceControl import control
 from flaskr.databases.collection_models.temperature import Temperature
 from flaskr.util.temperatureCategory import TemperatureCategory
 
-#リモコンアプリからの温度感覚
+#リモコンアプリからの温度感覚``
 @app.route("/temperatureSense", methods=["GET"])
 def get_tSense():
     #try:
