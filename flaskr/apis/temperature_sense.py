@@ -31,11 +31,11 @@ def get_tSense():
     tTarget = TemperatureDetermination(int(tActual),int(tSense)).decision_base()
     print(tTarget)
 
-    #目標温度の保存
-    requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber=4&tActual={tTarget}")
-
-
-
+    #ちょうどいいが選択された場合のみ目標温度を保存する
+    if tSense == 2: 
+        #目標温度の保存
+        requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber=4&tActual={tTarget}")
+    
     #操作指示
     controlResult = control(tActual,tTarget)
     
