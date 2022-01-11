@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, Response
 from flaskr.app import app
 from flaskr.databases.collection_models.queueOperation import queueOperation
 import traceback
@@ -51,4 +51,4 @@ def get_data():
         
     except Exception as e:
         traceback.print_exc() #エラー
-        return {"status":"400 Bad Request"}
+        return Response(response=json.dumps({"status":"400 Bad Request"}), status=400)

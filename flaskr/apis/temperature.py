@@ -1,4 +1,4 @@
-from flask import request
+from flask import json, request, Response
 from flaskr.app import app
 from datetime import datetime
 from flaskr.databases.collection_models.temperature import Temperature
@@ -13,10 +13,10 @@ def get_tActual():
         tActual = request.args.get("tActual")
 
         if sNumber == None or tActual == None:
-            return {"status":"204 No Content"}
+            return Response(response=json.dumps({"status":"204 No Content"}), status=204) 
         
         if int(sNumber) < 0 or int(sNumber) > 4:
-            return {"status":"412 Precondition Failed"}
+            return Response(response=json.dumps({"status":"412 Precondition Failed"}), status=412)
         
         #print(sNumber)#センサ番号
         #print(tActual)#温度データベースに登録
@@ -35,4 +35,4 @@ def get_tActual():
         return {"status":"200 OK"}
     except Exception as e:
         print(e)#エラー
-        return {"status":"400 Bad Request"}
+        return Response(response=json.dumps({"status":"400 Bad Request"}), status=400)

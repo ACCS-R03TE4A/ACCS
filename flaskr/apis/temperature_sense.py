@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, Response
 from flaskr.app import app
 
 import json
@@ -9,17 +9,17 @@ from Home_appliance_control_AI.applianceControl import control
 from flaskr.databases.collection_models.temperature import Temperature
 from flaskr.util.temperatureCategory import TemperatureCategory
 
-#リモコンアプリからの温度感覚
+#リモコンアプリからの温度感覚``
 @app.route("/temperatureSense", methods=["GET"])
 def get_tSense():
     #try:
     tSense = request.args.get("tSense")
     
     if tSense == None:
-        return {"status":"204 No Content"}
+        return  Response(response=json.dumps({"status":"204 No Content"}), status=204)
     
     if int(tSense) < 0 or int(tSense) > 4:
-        return {"status":"412 Precondition Failed"}
+        return Response(response=json.dumps({"status":"412 Precondition Failed"}), status=412)
     
 
 
@@ -39,10 +39,10 @@ def get_tSense():
     #操作指示
     controlResult = control(tActual,tTarget)
     
-    if controlResult == " <- ちょうどいい":
-        #ちょうどいい温度として保存する
-        saveResult = requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber=3&tActual={tActual}")
-        print("適温を保存")
+    #if controlResult == " <- ちょうどいい":
+    #ちょうどいい温度として保存する
+    saveResult = requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={tTarget}")
+    print("適温を保存")
     
     print(controlResult)
     
