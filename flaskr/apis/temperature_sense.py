@@ -41,7 +41,7 @@ def get_tSense():
 
     #ちょうどいいが選択された場合のみ快適温度を保存する
     if tSense == 2: 
-        requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber=sNumber={TemperatureCategory.tSuitable}&tActual={tActual}")
+        requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tSuitable}&tActual={tActual}")
         logger.info("快適温度を保存")
 
     #操作指示
