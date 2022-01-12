@@ -22,7 +22,10 @@ import flaskr.apis.temperature_current
 import flaskr.databases.db
 from flaskr.databases.collection_models.setting import Setting
 
-from flask.helpers import send_from_directory
+
+#logger
+from flaskr.logger import initLogger
+initLogger()
 
 
 CORS(
