@@ -9,6 +9,11 @@ from Home_appliance_control_AI.applianceControl import control
 from flaskr.databases.collection_models.temperature import Temperature
 from flaskr.util.temperatureCategory import TemperatureCategory
 
+from logging import getLogger, config
+logger = getLogger(__name__)
+with open("log_config.json", "r") as f:
+    config.dictConfig(json.load(f))
+
 #リモコンアプリからの温度感覚``
 @app.route("/temperatureSense", methods=["GET"])
 def get_tSense():
@@ -29,7 +34,7 @@ def get_tSense():
     
     #Determinationから目標温度が返ってくる
     tTarget = TemperatureDetermination(int(tActual),int(tSense)).decision_base()
-    print(tTarget)
+    logger.info(tTarget)
 
     #ちょうどいいが選択された場合のみ目標温度を保存する
     if tSense == 2: 
@@ -42,13 +47,15 @@ def get_tSense():
     #if controlResult == " <- ちょうどいい":
     #ちょうどいい温度として保存する
     saveResult = requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={tTarget}")
-    print("適温を保存")
+    logger.info("適温を保存")
     
-    print(controlResult)
-    
+    logger.info(controlResult)
 
-    return {"status":"200 OK","tActual":tActual,"tSense":tSense}
+
+    return Response(response=json.dumps({"status":"200 OK","tActual":tActual,"tSense":tSense}), status=200)
+    #return {"status":"200 OK","tActual":tActual,"tSense":tSense}
+
     #except Exception as e:
-    #    print(e)#エラー
+    #    logger.info(e)#エラー
     #    return {"status":"400 Bad Request"}
     

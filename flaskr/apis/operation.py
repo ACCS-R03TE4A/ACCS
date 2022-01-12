@@ -3,7 +3,10 @@ from flaskr.app import app
 from flaskr.databases.collection_models.queueOperation import queueOperation
 import traceback
 import json
-
+from logging import getLogger, config
+logger = getLogger(__name__)
+with open("log_config.json", "r") as f:
+    config.dictConfig(json.load(f))
 
 def digitConversion(x):
     y = int.from_bytes(x, "big")
@@ -20,7 +23,7 @@ def get_data():
         # value = request.args.get("value")
         # if value == None:
         #     return {"status":"204 No Content"}
-        # print(value)
+        # logger.info(value)
 
         #操作キューデータベースの中身確認
         try:
@@ -35,12 +38,12 @@ def get_data():
             operation = queueOperation.objects(appliance="学校のサーキュレータ").order_by("+_id").first()
 
             dict_ope = operation.get_dict()
-            print(dict_ope)
+            logger.info(dict_ope)
 
             #16進数への変換
             x = digitConversion(operation.data)
             dict_ope["data"] = x
-            print(dict_ope)
+            logger.info(dict_ope)
             #
 
             operation.delete()

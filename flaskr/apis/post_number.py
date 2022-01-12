@@ -2,6 +2,12 @@ from flask import request
 from flaskr.app import app
 # from flaskr.databases.db import db
 from flaskr.databases.collection_models.setting import Setting
+import json
+
+from logging import getLogger, config
+logger = getLogger(__name__)
+with open("log_config.json", "r") as f:
+    config.dictConfig(json.load(f))
 
 #リモコンアプリからの郵便番号
 @app.route("/postNumber", methods=["GET"])
@@ -17,6 +23,6 @@ def get_pNumber():
         return {"status":"200 OK","pNumber":pNumber}
 
     #except Exception as e:
-    #    print(e)#エラー
+    #    logger.info(e)#エラー
     #    
     #    return {"status":"400 Bad Request"}

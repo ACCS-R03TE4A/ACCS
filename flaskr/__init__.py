@@ -22,11 +22,9 @@ import flaskr.apis.temperature_current
 import flaskr.databases.db
 from flaskr.databases.collection_models.setting import Setting
 
-
-#logger
-from flaskr.logger import initLogger
-initLogger()
-
+# logging
+import logging
+logging.basicConfig()
 
 CORS(
     app,
