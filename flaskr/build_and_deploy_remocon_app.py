@@ -25,7 +25,7 @@ logger.info(f"controlServerHost : {remocon_config['controlServerHost']}")
 logger.info("building.... ")
 proc = subprocess.Popen("npm run build".split(" "), cwd="Remote-control-app", encoding='utf-8', stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 while proc.poll() == None:
-    logger.info(f"npm >> {proc.stdout.readline()}",end="")
+    logger.info(f"npm >> {proc.stdout.readline()}")
     time.sleep(0.01)
 if proc.returncode != 0:
     logger.info(f"npm >> {proc.stdout.read()}")
