@@ -22,34 +22,28 @@ isPressedSuitable = False
 tempDiff = 0
 timer = None
 
-
-
-#リモコンアプリからの温度感覚``
-@app.route("/temperatureSense", methods=["GET"])
 def timeLimit():
+    logger.info("自動保存タスクスタート")
     global isPressedSuitable
     timer_start = None
-    timeFrag = 0
     while not isPressedSuitable:
         tObject = Temperature.objects(temperatureCategory= TemperatureCategory.tActual).order_by("-time").first()
         tActual = tObject.Temperature
         tObject2 = Temperature.objects(temperatureCategory= TemperatureCategory.tTarget).order_by("-time").first()
-        tTarget = tObject.Temperature
-
-        if timeFrag == 0:
+        tTarget = tObject2.Temperature
+        if timer_start == None:
             if (tempDiff > 0 and tActual >= tTarget) or (tempDiff < 0 and tActual <= tTarget):
                 timer_start = datetime.now()
-                timeFrag = 1
-
-        if timeFrag == 1:
-            if datetime.now() - timer_start >= timedelta(minutes=10):
+                logger.info("快適温度自動保存タイマースタート")
+        else:
+            if datetime.now() - timer_start >= timedelta(seconds=10):
                 requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tSuitable}&tActual={tActual}")
-                logger.info("快適温度を保存")
+                logger.info("快適温度の自動保存")
                 isPressedSuitable = True
-            time.sleep(1)
-
-
-
+        time.sleep(1e-3)
+    logger.info("タスク終了")
+#リモコンアプリからの温度感覚``
+@app.route("/temperatureSense", methods=["GET"])
 def get_tSense():
     tSense = request.args.get("tSense")
     
@@ -75,17 +69,18 @@ def get_tSense():
     requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={tTarget}")
 
     #ちょうどいいが選択された場合のみ快適温度を保存する
-    if tSense == 2: 
+    if tSense == "2": 
         requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tSuitable}&tActual={tActual}")
-        logger.info("快適温度を保存")
+        logger.info("ユーザが快適温度を保存")
         global isPressedSuitable
         isPressedSuitable = True
     else:
-        isPressedSuitable = False
         global timer
         if timer != None:
             isPressedSuitable = True
+            logger.info("古いタスクの終了待ち")
             timer.join()
+        isPressedSuitable = False
         timer = threading.Thread(target=timeLimit)
         timer.start()
 
@@ -95,18 +90,3 @@ def get_tSense():
 
     
     return Response(response=json.dumps({"status":"200 OK","tActual":tActual,"tSense":tSense}), status=200)
-
-
-
-
-
-if __name__ == "__main__":
-    thread_1 = threading.Thread(target = get_tSense)
-    thread_2 = threading.Thread(target = timeLimit)
-
-    thread_1.start()
-    thread_2.start()
-
-
-
-
