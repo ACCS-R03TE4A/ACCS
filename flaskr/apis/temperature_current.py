@@ -5,7 +5,6 @@ import json
 import requests
 import traceback
 
-from Comfortable_temperature_AI.src.TemperatureDetermination import TemperatureDetermination
 from Home_appliance_control_AI.applianceControl import control
 from flaskr.databases.collection_models.temperature import Temperature
 from flaskr.util.temperatureCategory import TemperatureCategory

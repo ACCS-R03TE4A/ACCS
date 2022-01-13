@@ -7,7 +7,7 @@ import time
 import threading
 from datetime import datetime, timedelta
 
-from Comfortable_temperature_AI.src.TemperatureDetermination import TemperatureDetermination
+from Comfortable_temperature_AI.src.TemperatureDetermination import ComfortTemperaturePredictionAI
 from Home_appliance_control_AI.applianceControl import control
 from flaskr.databases.collection_models.temperature import Temperature
 from flaskr.util.temperatureCategory import TemperatureCategory
@@ -21,6 +21,8 @@ with open("log_config.json", "r") as f:
 isPressedSuitable = False
 tempDiff = 0
 timer = None
+
+comfTempAI = ComfortTemperaturePredictionAI()
 
 def timeLimit():
     logger.info("自動保存タスクスタート")
@@ -43,6 +45,8 @@ def timeLimit():
                 isPressedSuitable = True
         time.sleep(1e-3)
     logger.info("タスク終了")
+
+
 #リモコンアプリからの温度感覚``
 @app.route("/temperatureSense", methods=["GET"])
 def get_tSense():
@@ -60,14 +64,14 @@ def get_tSense():
     tActual = tObject.Temperature
     
     #Determinationから目標温度が返ってくる
-    tTarget = TemperatureDetermination(int(tActual),int(tSense)).decision_base()
+    tTarget = comfTempAI.getTargetTemperature(tSense)
     logger.info(tTarget)
 
     global tempDiff
     tempDiff = tTarget - tActual
 
     #目標温度の保存
-    requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={tTarget}")
+    requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={int(tTarget)}")
 
     #ちょうどいいが選択された場合のみ快適温度を保存する
     if tSense == "2": 
