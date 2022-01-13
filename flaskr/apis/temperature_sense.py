@@ -36,6 +36,7 @@ def timeLimit():
                 timer_start = datetime.now()
                 logger.info("快適温度自動保存タイマースタート")
         else:
+            # TODO timedelta(seconds=10) -> timedeleta(minutes=10)
             if datetime.now() - timer_start >= timedelta(seconds=10):
                 requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tSuitable}&tActual={tActual}")
                 logger.info("快適温度の自動保存")
