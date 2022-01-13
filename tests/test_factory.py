@@ -1,5 +1,4 @@
 from flaskr import create_app
-import pytest
 import json
 import pytest
 from flaskr.databases.collection_models.temperature import Temperature
@@ -34,7 +33,7 @@ def test_config():
 
 
 
-def test_200_temperatureSense1():
+def test_200_temperatureSense0():
     app = create_app({'TESTING': True})
 
     client = app.test_client() 
@@ -43,7 +42,7 @@ def test_200_temperatureSense1():
     assert data["status"] == "200 OK"
 
 
-def test_200_temperatureSense2():
+def test_200_temperatureSense4():
     app = create_app({'TESTING': True})
 
     client = app.test_client() 
@@ -51,6 +50,13 @@ def test_200_temperatureSense2():
     data = json.loads(response.data)
     assert data["status"] == "200 OK"
 
+def test_200_temperatureSense2():
+    app = create_app({'TESTING': True})
+
+    client = app.test_client() 
+    response = client.get('/temperatureSense?tSense=2')
+    data = json.loads(response.data)
+    assert data["status"] == "200 OK"
 
 def test_204_temperatureSense():
     app = create_app({'TESTING': True})
