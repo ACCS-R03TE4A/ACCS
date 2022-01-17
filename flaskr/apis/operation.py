@@ -4,6 +4,8 @@ from flaskr.databases.collection_models.queueOperation import queueOperation
 import traceback
 import json
 from logging import getLogger, config
+
+
 logger = getLogger(__name__)
 with open("log_config.json", "r") as f:
     config.dictConfig(json.load(f))
@@ -19,11 +21,6 @@ def digitConversion(x):
 @app.route("/operation", methods=["GET"])
 def get_data():
     try:
-        #値がほしくなったら「?value」にでも入れる。
-        # value = request.args.get("value")
-        # if value == None:
-        #     return {"status":"204 No Content"}
-        # logger.info(value)
 
         #操作キューデータベースの中身確認
         try:
@@ -47,6 +44,9 @@ def get_data():
             #
 
             operation.delete()
+
+            # print(f"operation={operation}")
+
             return {"status":d, "operation":dict_ope}
         
         else:
