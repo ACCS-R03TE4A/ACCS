@@ -2,6 +2,8 @@ from flask import json, request, Response
 from flaskr.app import app
 from datetime import datetime
 from flaskr.databases.collection_models.temperature import Temperature
+from Home_appliance_control_AI.applianceControl import control
+from flaskr.util.temperatureCategory import TemperatureCategory
 
 from logging import getLogger, config
 logger = getLogger(__name__)
@@ -36,7 +38,13 @@ def get_tActual():
             temperatureCategory=int(sNumber),
             Temperature=float(tActual)
             ).save()
-        
+
+            
+        tTarget_obj = Temperature.objects(temperatureCategory=TemperatureCategory.tTarget).order_by("-time").first()
+        if tTarget_obj != None:
+            control(int(tActual),tTarget_obj.Temperature)
+
+
         return {"status":"200 OK"}
     except Exception as e:
         logger.info(e)#エラー
