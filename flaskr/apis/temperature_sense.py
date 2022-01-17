@@ -1,8 +1,8 @@
 from flask import request, Response
 from flaskr.app import app
 
-import json
 import requests
+import json
 import time
 import threading
 from datetime import datetime, timedelta
@@ -41,6 +41,7 @@ def timeLimit():
             # TODO timedelta(seconds=10) -> timedeleta(minutes=10)
             if datetime.now() - timer_start >= timedelta(seconds=10):
                 requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tSuitable}&tActual={tActual}")
+                requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={tActual}")
                 logger.info("快適温度の自動保存")
                 isPressedSuitable = True
         time.sleep(1e-3)
@@ -71,11 +72,12 @@ def get_tSense():
     tempDiff = tTarget - tActual
 
     #目標温度の保存
-    requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={int(tTarget)}")
+    w = requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={int(tTarget)}")
 
     #ちょうどいいが選択された場合のみ快適温度を保存する
     if tSense == "2": 
         requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tSuitable}&tActual={tActual}")
+        requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={tActual}")
         logger.info("ユーザが快適温度を保存")
         global isPressedSuitable
         isPressedSuitable = True
