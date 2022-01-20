@@ -40,8 +40,10 @@ def timeLimit():
         else:
             # TODO timedelta(seconds=10) -> timedeleta(minutes=10)
             if datetime.now() - timer_start >= timedelta(seconds=10):
-                requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tSuitable}&tActual={tActual}")
-                requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={tActual}")
+
+                requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tSuitable}&tActual={int(tActual)}")
+                requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={tActual)}")
+
                 logger.info("快適温度の自動保存")
                 isPressedSuitable = True
         time.sleep(1e-3)
@@ -75,14 +77,15 @@ def get_tSense():
     w = requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={int(tTarget)}")
 
     #ちょうどいいが選択された場合のみ快適温度を保存する
+
     if tSense == "2": 
-        requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tSuitable}&tActual={tActual}")
-        requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={tActual}")
+        requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tSuitable}&tActual={int(tActual)}")
+        requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={int(tActual)}")
         logger.info("ユーザが快適温度を保存")
         global isPressedSuitable
         isPressedSuitable = True
+
     else:
-        global timer
         if timer != None:
             isPressedSuitable = True
             logger.info("古いタスクの終了待ち")
