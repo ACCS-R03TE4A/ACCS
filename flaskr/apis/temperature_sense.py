@@ -86,6 +86,7 @@ def get_tSense():
         isPressedSuitable = True
 
     else:
+        global timer
         if timer != None:
             isPressedSuitable = True
             logger.info("古いタスクの終了待ち")
