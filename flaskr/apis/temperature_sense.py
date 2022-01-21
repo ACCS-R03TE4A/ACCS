@@ -42,7 +42,7 @@ def timeLimit():
             if datetime.now() - timer_start >= timedelta(seconds=10):
 
                 requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tSuitable}&tActual={int(tActual)}")
-                requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={tActual)}")
+                requests.get(f"HTTP://localhost:5000/temperatureActual?sNumber={TemperatureCategory.tTarget}&tActual={int(tActual)}")
 
                 logger.info("快適温度の自動保存")
                 isPressedSuitable = True
