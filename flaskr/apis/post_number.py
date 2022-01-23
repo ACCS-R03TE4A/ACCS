@@ -17,6 +17,7 @@ with open("log_config.json", "r") as f:
 #1 : 現在登録されている郵便番号の取得  ->  pNumber = get_pNumber() or requests.get(f"HTTP://localhost:5000/postNumber)
 #2 : 追加や変更  ->  requests.get(f"HTTP://localhost:5000/postNumber?pNumber=○○○○○○○)
 @app.route("/postNumber", methods=["GET"])
+
 def get_pNumber():
     try:
         pNumber = request.args.get("pNumber")
@@ -33,7 +34,7 @@ def get_pNumber():
                 return Response(response=json.dumps({"status":"204 No Content"}), status=204)
             
             pNumber = Object.postnumber
-            return pNumber
+            return {"postNumber" : pNumber}
             
         #2 郵便番号をデータベースに保存する。
         if Object == None:
